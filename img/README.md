@@ -2,14 +2,46 @@
 
 Tu wrzucasz własne zdjęcia/grafiki wyświetlane na ekranach formularza.
 
-## Oczekiwane pliki
+## Nowe pliki (po analizie)
 
-| Plik                 | Ekran formularza        | Opis                                    |
-|----------------------|-------------------------|-----------------------------------------|
-| `aktywnosc.jpg`      | Ekran 2 – Aktywność     | Zdjęcie nawiązujące do aktywności (np. rower, kajaki, spacer) |
-| `teren.jpg`          | Ekran 3 – Teren         | Zdjęcie terenu / krajobrazu             |
-| `nocleg.jpg`         | Ekran 4 – Nocleg        | Zdjęcie miejsca noclegowego             |
-| `udogodnienia.jpg`   | Ekran 5 – Udogodnienia  | Zdjęcie udogodnień (basen, jacuzzi itp.) |
+W katalogu są aktualnie gotowe assety PNG (wszystkie: `2048×2048`):
+
+### Ekran 2 – Aktywność
+
+- `spacer.png`
+- `rower.png`
+- `kajaki.png`
+
+### Ekran 3 – Teren
+
+- `las.png`
+- `gory.png`
+- `morze.png`
+- `rzeki.png`
+- `jeziora.png`
+
+### Ekran 4 – Nocleg
+
+- `samotnia.png`
+- `domki.png`
+- `namioty.png`
+
+### Ekran 5 – Udogodnienia
+
+- `basen.png`
+- `jacuzzi.png`
+- `balia.png`
+
+## Oczekiwane pliki w `index.html` (domyślnie)
+
+Aktualnie formularz odwołuje się do:
+
+- `aktywnosc.jpg`
+- `teren.jpg`
+- `nocleg.jpg`
+- `udogodnienia.jpg`
+
+Jeśli chcesz użyć nowych obrazków PNG, zaktualizuj odpowiednie atrybuty `src` w `index.html`.
 
 ## Wskazówki
 
