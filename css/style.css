@@ -253,6 +253,11 @@ body {
   background: rgba(233, 69, 96, 0.12);
   transform: scale(1.04);
 }
+/* Checkboxes get accent2 (orange) so multi-selection is visually distinct from single-select radios */
+.choice-tile input[type="checkbox"]:checked + label {
+  border-color: var(--clr-accent2);
+  background: rgba(245, 166, 35, 0.12);
+}
 .choice-tile label:hover {
   border-color: var(--clr-accent2);
   transform: scale(1.02);

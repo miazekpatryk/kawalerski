@@ -23,7 +23,7 @@ const SPREADSHEET_ID = 'TWOJ_SPREADSHEET_ID'; // ← zmień
 const SHEET_NAME     = 'Odpowiedzi';           // ← zmień jeśli potrzeba
 
 // Nagłówki kolumn – muszą być zgodne z kluczami w formData (js/form.js)
-const COLUMNS = ['timestamp', 'imie', 'email', 'obecnosc', 'nocleg', 'transport', 'koszulka', 'uwagi'];
+const COLUMNS = ['timestamp', 'nick', 'aktywnosc', 'teren', 'nocleg', 'udogodnienia'];
 
 /**
  * Obsługuje żądania POST z formularza.

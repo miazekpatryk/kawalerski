@@ -1,6 +1,6 @@
 /**
- * Kawalerski – Bachelor Party RSVP Form
- * Multi-step form with SheetDB / Google Apps Script submission
+ * Kawalerski – Bachelor Party Plan Form
+ * Multi-step SPA with SheetDB / Google Apps Script submission
  *
  * ──────────────────────────────────────────────────────────
  *  KONFIGURACJA – uzupełnij przed wdrożeniem
@@ -18,26 +18,44 @@
  * ──────────────────────────────────────────────────────────
  */
 const CONFIG = {
-  SUBMIT_METHOD: 'sheetdb',           // 'sheetdb' | 'apps_script'
-  SHEETDB_URL:   'TWOJ_SHEETDB_URL',  // np. https://sheetdb.io/api/v1/XXXXXX
-  APPS_SCRIPT_URL: 'TWOJ_APPS_SCRIPT_URL', // URL opublikowanego Apps Script
+  SUBMIT_METHOD:   'sheetdb',                 // 'sheetdb' | 'apps_script'
+  SHEETDB_URL:     'TWOJ_SHEETDB_URL',        // np. https://sheetdb.io/api/v1/XXXXXX
+  APPS_SCRIPT_URL: 'TWOJ_APPS_SCRIPT_URL',   // URL opublikowanego Apps Script
+};
+
+/* ──────────────────────────────────────────────────────────
+   Terrain options per activity (Ekran 3 – dynamiczny)
+   ────────────────────────────────────────────────────────── */
+const TERRAIN_OPTIONS = {
+  Spacer:  [
+    { value: 'Las',  icon: '🌲', label: 'Las'  },
+    { value: 'Góry', icon: '⛰️', label: 'Góry' },
+    { value: 'Morze',icon: '🌊', label: 'Morze'},
+  ],
+  Rower:   [
+    { value: 'Las',  icon: '🌲', label: 'Las'  },
+    { value: 'Góry', icon: '⛰️', label: 'Góry' },
+  ],
+  Kajaki:  [
+    { value: 'Góry',   icon: '⛰️',  label: 'Góry'   },
+    { value: 'Rzeki',  icon: '🏞️',  label: 'Rzeki'  },
+    { value: 'Jeziora',icon: '🏔️',  label: 'Jeziora'},
+  ],
 };
 
 /* ──────────────────────────────────────────────────────────
    State
    ────────────────────────────────────────────────────────── */
 let currentStep = 0;
-const TOTAL_STEPS = 5; // liczba kroków formularza (bez ekranu sukcesu)
+const TOTAL_STEPS = 5; // ekrany 1-5 (bez ekranu podziękowania)
 
 const formData = {
-  imie:        '',
-  email:       '',
-  obecnosc:    '',
-  nocleg:      '',
-  transport:   '',
-  koszulka:    '',
-  uwagi:       '',
-  timestamp:   '',
+  nick:          '',
+  aktywnosc:     '',
+  teren:         '',
+  nocleg:        '',
+  udogodnienia:  '',
+  timestamp:     '',
 };
 
 /* ──────────────────────────────────────────────────────────
@@ -72,12 +90,56 @@ function updateProgressBar() {
     const seg = document.getElementById(`ps-${i}`);
     if (!seg) continue;
     seg.classList.remove('done', 'active');
-    if (i < currentStep)       seg.classList.add('done');
+    if (i < currentStep)        seg.classList.add('done');
     else if (i === currentStep) seg.classList.add('active');
   }
 
   const label = document.getElementById('progressLabel');
   if (label) label.textContent = `Krok ${currentStep + 1} z ${TOTAL_STEPS}`;
+}
+
+/* ──────────────────────────────────────────────────────────
+   Terrain – render tiles dynamically when entering step 2
+   ────────────────────────────────────────────────────────── */
+function renderTerrainOptions() {
+  const grid = document.getElementById('terrain-grid');
+  if (!grid) return;
+
+  const options = TERRAIN_OPTIONS[formData.aktywnosc] || [];
+  grid.innerHTML = '';
+
+  options.forEach(({ value, icon, label }) => {
+    const id = `ter-${value.toLowerCase()}`;
+    const tile = document.createElement('div');
+    tile.className = 'choice-tile';
+    tile.innerHTML = `
+      <input type="radio" name="teren" id="${id}" value="${value}" />
+      <label for="${id}">
+        <span class="tile-icon">${icon}</span>
+        ${label}
+      </label>`;
+    grid.appendChild(tile);
+  });
+
+  // Re-select previously chosen terrain if it's still valid
+  if (formData.teren) {
+    const prev = grid.querySelector(`input[value="${formData.teren}"]`);
+    if (prev) prev.checked = true;
+  }
+
+  // Re-bind auto-advance for newly created radios
+  grid.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      formData.teren = radio.value;
+      setTimeout(() => nextStep(), 350);
+    });
+  });
+
+  // Update step description
+  const desc = document.getElementById('terrain-desc');
+  if (desc && formData.aktywnosc) {
+    desc.textContent = `Wybrałeś: ${formData.aktywnosc}. Teraz wybierz teren.`;
+  }
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -96,6 +158,9 @@ function showStep(index) {
 
   currentStep = index;
   updateProgressBar();
+
+  // Rebuild terrain tiles every time step 2 becomes active
+  if (index === 2) renderTerrainOptions();
 }
 
 function nextStep() {
@@ -125,7 +190,6 @@ function bindNavButtons() {
 function bindChoiceTiles() {
   document.querySelectorAll('.choice-tile input[type="radio"]').forEach(radio => {
     radio.addEventListener('change', () => {
-      // Small delay so user sees the selection before advancing
       const autoAdvance = radio.closest('.choice-grid')?.dataset.autoAdvance !== 'false';
       if (autoAdvance) {
         setTimeout(() => nextStep(), 350);
@@ -140,43 +204,44 @@ function bindChoiceTiles() {
 function validateCurrentStep() {
   clearErrors();
 
+  // Ekran 1 – nick
   if (currentStep === 0) {
-    const imie  = document.getElementById('imie');
-    const email = document.getElementById('email');
-    let ok = true;
-
-    if (!imie?.value.trim()) {
-      showError('err-imie', 'Podaj swoje imię i nazwisko.');
-      ok = false;
+    const nick = document.getElementById('nick');
+    if (!nick?.value.trim()) {
+      showError('err-nick', 'Wpisz swój nick, byku! 🐂');
+      return false;
     }
-    if (!email?.value.trim() || !isValidEmail(email.value.trim())) {
-      showError('err-email', 'Podaj poprawny adres e-mail.');
-      ok = false;
-    }
-    return ok;
+    return true;
   }
 
+  // Ekran 2 – aktywność
   if (currentStep === 1) {
-    if (!getRadioValue('obecnosc')) {
-      showError('err-obecnosc', 'Zaznacz swoją odpowiedź.');
+    if (!getRadioValue('aktywnosc')) {
+      showError('err-aktywnosc', 'Wybierz aktywność.');
       return false;
     }
+    return true;
   }
 
+  // Ekran 3 – teren
   if (currentStep === 2) {
-    if (!getRadioValue('nocleg')) {
-      showError('err-nocleg', 'Wybierz opcję noclegu.');
+    if (!getRadioValue('teren')) {
+      showError('err-teren', 'Wybierz teren.');
       return false;
     }
+    return true;
   }
 
+  // Ekran 4 – nocleg
   if (currentStep === 3) {
-    if (!getRadioValue('transport')) {
-      showError('err-transport', 'Wybierz środek transportu.');
+    if (!getRadioValue('nocleg')) {
+      showError('err-nocleg', 'Wybierz rodzaj noclegu.');
       return false;
     }
+    return true;
   }
 
+  // Ekran 5 – udogodnienia (checkboxy – opcjonalne, nie wymagają walidacji)
   return true;
 }
 
@@ -189,13 +254,14 @@ function clearErrors() {
   document.querySelectorAll('.field-error').forEach(el => el.classList.remove('visible'));
 }
 
-function isValidEmail(v) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-}
-
 function getRadioValue(name) {
   const checked = document.querySelector(`input[name="${name}"]:checked`);
   return checked ? checked.value : null;
+}
+
+function getCheckboxValues(name) {
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+    .map(el => el.value);
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -203,57 +269,30 @@ function getRadioValue(name) {
    ────────────────────────────────────────────────────────── */
 function collectCurrentStep() {
   if (currentStep === 0) {
-    formData.imie  = document.getElementById('imie')?.value.trim()  || '';
-    formData.email = document.getElementById('email')?.value.trim() || '';
+    formData.nick = document.getElementById('nick')?.value.trim() || '';
   }
   if (currentStep === 1) {
-    formData.obecnosc = getRadioValue('obecnosc') || '';
+    formData.aktywnosc = getRadioValue('aktywnosc') || '';
+    // Reset terrain when activity changes
+    formData.teren = '';
   }
   if (currentStep === 2) {
-    formData.nocleg = getRadioValue('nocleg') || '';
+    formData.teren = getRadioValue('teren') || '';
   }
   if (currentStep === 3) {
-    formData.transport  = getRadioValue('transport')  || '';
-    formData.koszulka   = getRadioValue('koszulka')   || '';
+    formData.nocleg = getRadioValue('nocleg') || '';
   }
   if (currentStep === 4) {
-    formData.uwagi = document.getElementById('uwagi')?.value.trim() || '';
-    fillSummary();
+    const vals = getCheckboxValues('udogodnienia');
+    formData.udogodnienia = vals.length ? vals.join(', ') : 'Brak';
   }
 }
 
 /* ──────────────────────────────────────────────────────────
-   Summary (step 4)
-   ────────────────────────────────────────────────────────── */
-function fillSummary() {
-  const map = {
-    's-imie':      formData.imie,
-    's-email':     formData.email,
-    's-obecnosc':  labelFor('obecnosc',  formData.obecnosc),
-    's-nocleg':    labelFor('nocleg',    formData.nocleg),
-    's-transport': labelFor('transport', formData.transport),
-    's-koszulka':  labelFor('koszulka',  formData.koszulka),
-    's-uwagi':     formData.uwagi || '—',
-  };
-  Object.entries(map).forEach(([id, val]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  });
-}
-
-function labelFor(name, value) {
-  if (!value) return '—';
-  const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
-  if (!input) return value;
-  const label = input.closest('.choice-tile')?.querySelector('label');
-  return label ? label.textContent.replace(/\s+/g, ' ').trim() : value;
-}
-
-/* ──────────────────────────────────────────────────────────
-   Submit
+   Submit (triggered from Ekran 5 – "Potwierdź plan")
    ────────────────────────────────────────────────────────── */
 async function submitForm() {
-  collectCurrentStep(); // collect step 4 data (uwagi)
+  collectCurrentStep(); // collect step 4 (udogodnienia)
 
   formData.timestamp = new Date().toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw' });
 
@@ -285,14 +324,14 @@ async function submitForm() {
     console.error('Błąd wysyłania:', err);
     if (btn) {
       btn.disabled = false;
-      btn.innerHTML = '🚀 Wyślij zgłoszenie';
+      btn.innerHTML = '✅ Potwierdź plan';
     }
     alert('Ups! Wystąpił błąd podczas wysyłania. Spróbuj ponownie lub skontaktuj się z organizatorem.');
   }
 }
 
 /* ──────────────────────────────────────────────────────────
-   Success screen
+   Success screen (Ekran 6)
    ────────────────────────────────────────────────────────── */
 function showSuccessScreen() {
   document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
@@ -315,26 +354,25 @@ function launchConfetti() {
     const el = document.createElement('div');
     const size = Math.random() * 10 + 6;
     Object.assign(el.style, {
-      position:       'fixed',
-      top:            '-20px',
-      left:           `${Math.random() * 100}vw`,
-      width:          `${size}px`,
-      height:         `${size}px`,
-      borderRadius:   Math.random() > 0.5 ? '50%' : '2px',
-      background:     colors[Math.floor(Math.random() * colors.length)],
-      opacity:        '1',
-      zIndex:         '9999',
-      pointerEvents:  'none',
-      transform:      `rotate(${Math.random() * 360}deg)`,
-      transition:     `transform ${1.5 + Math.random()}s ease, top ${1.5 + Math.random() * 2}s ease, opacity 0.5s ease ${1.5 + Math.random()}s`,
+      position:      'fixed',
+      top:           '-20px',
+      left:          `${Math.random() * 100}vw`,
+      width:         `${size}px`,
+      height:        `${size}px`,
+      borderRadius:  Math.random() > 0.5 ? '50%' : '2px',
+      background:    colors[Math.floor(Math.random() * colors.length)],
+      opacity:       '1',
+      zIndex:        '9999',
+      pointerEvents: 'none',
+      transform:     `rotate(${Math.random() * 360}deg)`,
+      transition:    `transform ${1.5 + Math.random()}s ease, top ${1.5 + Math.random() * 2}s ease, opacity 0.5s ease ${1.5 + Math.random()}s`,
     });
     container.appendChild(el);
 
-    // Animate downward
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        el.style.top     = `${80 + Math.random() * 40}vh`;
-        el.style.opacity = '0';
+        el.style.top       = `${80 + Math.random() * 40}vh`;
+        el.style.opacity   = '0';
         el.style.transform = `rotate(${Math.random() * 720}deg) translateX(${(Math.random() - 0.5) * 200}px)`;
       });
     });
