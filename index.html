@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Formularz zgłoszeniowy na wieczór kawalerski. Wypełnij krok po kroku!" />
+
+  <title>🥂 Kawalerski — Formularz zgłoszeniowy</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Animated background bubbles -->
+  <div class="bg-bubbles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="app-wrapper">
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="site-header">
+
+      <!-- SVG Hero Illustration -->
+      <svg
+        class="step-illustration"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 400 180"
+        width="360"
+        height="160"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f5a623;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <!-- Beer glasses -->
+        <g transform="translate(20,30)">
+          <rect x="0" y="20" width="34" height="50" rx="4" fill="#f5a623" opacity="0.9"/>
+          <rect x="2" y="18" width="30" height="6" rx="3" fill="#fff" opacity="0.4"/>
+          <rect x="34" y="30" width="8" height="20" rx="4" fill="#f5a623" opacity="0.7"/>
+          <rect x="4" y="24" width="10" height="3" rx="2" fill="#fff" opacity="0.5"/>
+        </g>
+        <g transform="translate(58,20)">
+          <rect x="0" y="20" width="34" height="50" rx="4" fill="#f5a623" opacity="0.8"/>
+          <rect x="2" y="18" width="30" height="6" rx="3" fill="#fff" opacity="0.4"/>
+          <rect x="34" y="30" width="8" height="20" rx="4" fill="#f5a623" opacity="0.6"/>
+        </g>
+        <!-- Party popper -->
+        <g transform="translate(130,10)">
+          <polygon points="0,70 40,0 80,70" fill="url(#grad1)" opacity="0.85"/>
+          <circle cx="40" cy="0" r="8" fill="#fff" opacity="0.3"/>
+          <!-- Confetti dots -->
+          <circle cx="20"  cy="20" r="3" fill="#fff" opacity="0.6"/>
+          <circle cx="55"  cy="30" r="4" fill="#e94560" opacity="0.8"/>
+          <circle cx="35"  cy="45" r="2" fill="#fff" opacity="0.5"/>
+          <circle cx="62"  cy="15" r="3" fill="#f5a623" opacity="0.7"/>
+          <circle cx="10"  cy="50" r="2" fill="#f5a623" opacity="0.6"/>
+        </g>
+        <!-- Stars / sparks -->
+        <g fill="#f5a623" opacity="0.7">
+          <polygon points="240,15 243,25 253,25 245,31 248,41 240,35 232,41 235,31 227,25 237,25" transform="scale(0.6) translate(180,10)"/>
+          <polygon points="240,15 243,25 253,25 245,31 248,41 240,35 232,41 235,31 227,25 237,25" transform="scale(0.4) translate(480,50)"/>
+          <polygon points="240,15 243,25 253,25 245,31 248,41 240,35 232,41 235,31 227,25 237,25" transform="scale(0.5) translate(600,20)"/>
+        </g>
+        <!-- Crown -->
+        <g transform="translate(270,25)">
+          <polygon points="0,50 10,10 30,35 50,0 70,35 90,10 100,50" fill="url(#grad1)" opacity="0.9"/>
+          <rect x="0" y="50" width="100" height="12" rx="4" fill="#e94560" opacity="0.8"/>
+          <circle cx="10"  cy="50" r="5" fill="#fff" opacity="0.7"/>
+          <circle cx="50"  cy="40" r="5" fill="#fff" opacity="0.7"/>
+          <circle cx="90"  cy="50" r="5" fill="#fff" opacity="0.7"/>
+        </g>
+        <!-- Champagne bottle outline -->
+        <g transform="translate(345,15)">
+          <rect x="12" y="0"  width="16" height="20" rx="4" fill="#2ecc71" opacity="0.7"/>
+          <rect x="8"  y="18" width="24" height="55" rx="6" fill="#27ae60" opacity="0.8"/>
+          <rect x="10" y="35" width="20" height="8"  rx="2" fill="#fff" opacity="0.25"/>
+        </g>
+        <!-- Floating music note -->
+        <text x="110" y="90" font-size="28" fill="#e94560" opacity="0.5" font-family="serif">♪</text>
+        <text x="210" y="100" font-size="20" fill="#f5a623" opacity="0.4" font-family="serif">♫</text>
+        <text x="320" y="95" font-size="22" fill="#3498db" opacity="0.4" font-family="serif">♩</text>
+      </svg>
+
+      <span class="logo-icon" aria-hidden="true">🥂</span>
+      <h1>Kawalerski!</h1>
+      <p class="subtitle">Wypełnij formularz krok po kroku i daj znać, że będziesz 🎉</p>
+    </header>
+
+    <!-- ===================== PROGRESS BAR ===================== -->
+    <div class="progress-wrap" role="progressbar" aria-label="Postęp formularza">
+      <div id="progressBar" class="progress-wrap" style="flex:1; margin:0; gap:8px;"></div>
+      <span id="progressLabel" class="progress-label"></span>
+    </div>
+
+    <!-- ===================== FORM ===================== -->
+    <form id="rsvpForm" novalidate>
+
+      <!-- ─────────── STEP 0 – Dane kontaktowe ─────────── -->
+      <section id="step-0" class="step-card" aria-label="Krok 1: Twoje dane">
+
+        <!-- Step SVG illustration -->
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 200 120" width="180" aria-hidden="true">
+          <circle cx="100" cy="40" r="30" fill="#e94560" opacity="0.15"/>
+          <circle cx="100" cy="35" r="20" fill="#e94560" opacity="0.7"/>
+          <ellipse cx="100" cy="80" rx="35" ry="18" fill="#e94560" opacity="0.5"/>
+          <circle cx="100" cy="27" r="8" fill="#fff" opacity="0.4"/>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">👤</span>
+        <h2>Kim jesteś?</h2>
+        <p class="step-desc">Podaj swoje imię, żebyśmy wiedzieli kto do nas dołącza!</p>
+
+        <div class="form-group">
+          <label for="imie">Imię i nazwisko</label>
+          <input
+            type="text"
+            id="imie"
+            name="imie"
+            placeholder="np. Janusz Kowalski"
+            autocomplete="name"
+            required
+          />
+          <p id="err-imie" class="field-error" role="alert"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Adres e-mail</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="np. janusz@gmail.com"
+            autocomplete="email"
+            required
+          />
+          <p id="err-email" class="field-error" role="alert"></p>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" data-next>
+            Dalej →
+          </button>
+        </div>
+      </section>
+
+      <!-- ─────────── STEP 1 – Obecność ─────────── -->
+      <section id="step-1" class="step-card" aria-label="Krok 2: Potwierdzenie obecności">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 200 100" width="180" aria-hidden="true">
+          <!-- Calendar icon -->
+          <rect x="30" y="20" width="140" height="60" rx="8" fill="#1a1a2e" stroke="#e94560" stroke-width="2"/>
+          <rect x="30" y="20" width="140" height="22" rx="8" fill="#e94560" opacity="0.7"/>
+          <rect x="30" y="34" width="140" height="8" rx="0" fill="#e94560" opacity="0.7"/>
+          <circle cx="65"  cy="16" r="5" fill="#f5a623"/>
+          <circle cx="135" cy="16" r="5" fill="#f5a623"/>
+          <rect x="65"  cy="10" width="4" height="12" rx="2" fill="#f5a623" x="63" y="10"/>
+          <rect x="63"  y="10" width="4" height="12" rx="2" fill="#f5a623"/>
+          <rect x="133" y="10" width="4" height="12" rx="2" fill="#f5a623"/>
+          <!-- Check mark inside -->
+          <polyline points="70,65 90,82 130,52" fill="none" stroke="#2ecc71" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">📅</span>
+        <h2>Czy będziesz?</h2>
+        <p class="step-desc">Daj znać czy możemy na Ciebie liczyć!</p>
+
+        <div class="choice-grid" data-auto-advance="true">
+          <div class="choice-tile">
+            <input type="radio" name="obecnosc" id="ob-tak" value="Tak, będę!" />
+            <label for="ob-tak">
+              <span class="tile-icon">✅</span>
+              Tak, będę!
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="obecnosc" id="ob-moze" value="Może, dam znać później" />
+            <label for="ob-moze">
+              <span class="tile-icon">🤔</span>
+              Może być
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="obecnosc" id="ob-nie" value="Niestety nie" />
+            <label for="ob-nie">
+              <span class="tile-icon">😔</span>
+              Niestety nie
+            </label>
+          </div>
+        </div>
+        <p id="err-obecnosc" class="field-error" role="alert"></p>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-prev>← Wstecz</button>
+          <button type="button" class="btn btn-primary" data-next>Dalej →</button>
+        </div>
+      </section>
+
+      <!-- ─────────── STEP 2 – Nocleg ─────────── -->
+      <section id="step-2" class="step-card" aria-label="Krok 3: Nocleg">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 200 110" width="180" aria-hidden="true">
+          <!-- House -->
+          <polygon points="100,10 20,65 180,65" fill="#e94560" opacity="0.7"/>
+          <rect x="40" y="65" width="120" height="45" rx="4" fill="#16213e" stroke="#2d3561" stroke-width="1.5"/>
+          <!-- Door -->
+          <rect x="85" y="82" width="30" height="28" rx="4" fill="#e94560" opacity="0.5"/>
+          <!-- Windows -->
+          <rect x="48" y="72" width="22" height="18" rx="3" fill="#f5a623" opacity="0.5"/>
+          <rect x="130" y="72" width="22" height="18" rx="3" fill="#f5a623" opacity="0.5"/>
+          <!-- Moon -->
+          <path d="M165,18 a14,14 0 1,1 14,0 a10,10 0 1,0 -14,0" fill="#f5a623" opacity="0.6"/>
+          <!-- Stars -->
+          <circle cx="148" cy="25" r="2" fill="#fff" opacity="0.7"/>
+          <circle cx="158" cy="12" r="1.5" fill="#fff" opacity="0.6"/>
+          <circle cx="170" cy="8"  r="1"   fill="#fff" opacity="0.5"/>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">🛏️</span>
+        <h2>Potrzebujesz noclegu?</h2>
+        <p class="step-desc">Organizujemy miejsca na sen – daj znać czego potrzebujesz.</p>
+
+        <div class="choice-grid" data-auto-advance="true">
+          <div class="choice-tile">
+            <input type="radio" name="nocleg" id="noc-tak" value="Tak, potrzebuję noclegu" />
+            <label for="noc-tak">
+              <span class="tile-icon">🛏️</span>
+              Tak, potrzebuję
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="nocleg" id="noc-sam" value="Mam własne nocleg" />
+            <label for="noc-sam">
+              <span class="tile-icon">🏠</span>
+              Mam swój nocleg
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="nocleg" id="noc-nie" value="Wracam tego samego dnia" />
+            <label for="noc-nie">
+              <span class="tile-icon">🚗</span>
+              Wracam tego dnia
+            </label>
+          </div>
+        </div>
+        <p id="err-nocleg" class="field-error" role="alert"></p>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-prev>← Wstecz</button>
+          <button type="button" class="btn btn-primary" data-next>Dalej →</button>
+        </div>
+      </section>
+
+      <!-- ─────────── STEP 3 – Transport + Koszulka ─────────── -->
+      <section id="step-3" class="step-card" aria-label="Krok 4: Transport i koszulka">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 100" width="220" aria-hidden="true">
+          <!-- Bus -->
+          <rect x="10" y="30" width="100" height="55" rx="8" fill="#3498db" opacity="0.7"/>
+          <rect x="18" y="40" width="20" height="16" rx="3" fill="#fff" opacity="0.6"/>
+          <rect x="46" y="40" width="20" height="16" rx="3" fill="#fff" opacity="0.6"/>
+          <rect x="74" y="40" width="20" height="16" rx="3" fill="#fff" opacity="0.6"/>
+          <circle cx="30"  cy="86" r="9" fill="#1a1a2e" stroke="#3498db" stroke-width="2"/>
+          <circle cx="90"  cy="86" r="9" fill="#1a1a2e" stroke="#3498db" stroke-width="2"/>
+          <!-- Car -->
+          <rect x="130" y="55" width="90" height="35" rx="8" fill="#e94560" opacity="0.7"/>
+          <rect x="145" y="42" width="60" height="22" rx="6" fill="#e94560" opacity="0.5"/>
+          <rect x="150" y="46" width="24" height="14" rx="3" fill="#fff" opacity="0.5"/>
+          <rect x="180" y="46" width="20" height="14" rx="3" fill="#fff" opacity="0.5"/>
+          <circle cx="148" cy="91" r="8" fill="#1a1a2e" stroke="#e94560" stroke-width="2"/>
+          <circle cx="202" cy="91" r="8" fill="#1a1a2e" stroke="#e94560" stroke-width="2"/>
+          <!-- T-shirt -->
+          <g transform="translate(165,5)" opacity="0.8">
+            <path d="M10,0 L0,12 L8,12 L8,28 L22,28 L22,12 L30,12 L20,0 C18,5 12,5 10,0Z"
+                  fill="#f5a623"/>
+          </g>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">🚌</span>
+        <h2>Transport i koszulka</h2>
+        <p class="step-desc">Jak dojeżdżasz i czy potrzebujesz koszulki na imprezę?</p>
+
+        <p style="font-size:0.82rem;font-weight:700;color:var(--clr-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">
+          Środek transportu
+        </p>
+        <div class="choice-grid" style="margin-bottom:22px;" data-auto-advance="false">
+          <div class="choice-tile">
+            <input type="radio" name="transport" id="tr-auto" value="Własny samochód" />
+            <label for="tr-auto">
+              <span class="tile-icon">🚗</span>
+              Własny samochód
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="transport" id="tr-bus" value="Organizowany bus" />
+            <label for="tr-bus">
+              <span class="tile-icon">🚌</span>
+              Organizowany bus
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="transport" id="tr-pociag" value="Pociąg" />
+            <label for="tr-pociag">
+              <span class="tile-icon">🚆</span>
+              Pociąg
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="transport" id="tr-inne" value="Inne" />
+            <label for="tr-inne">
+              <span class="tile-icon">🤷</span>
+              Inne
+            </label>
+          </div>
+        </div>
+        <p id="err-transport" class="field-error" role="alert"></p>
+
+        <p style="font-size:0.82rem;font-weight:700;color:var(--clr-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;margin-top:8px;">
+          Koszulka kawalerska
+        </p>
+        <div class="choice-grid" data-auto-advance="false">
+          <div class="choice-tile">
+            <input type="radio" name="koszulka" id="kos-s"   value="S"   />
+            <label for="kos-s"><span class="tile-icon">👕</span> S</label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="koszulka" id="kos-m"   value="M"   />
+            <label for="kos-m"><span class="tile-icon">👕</span> M</label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="koszulka" id="kos-l"   value="L"   />
+            <label for="kos-l"><span class="tile-icon">👕</span> L</label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="koszulka" id="kos-xl"  value="XL"  />
+            <label for="kos-xl"><span class="tile-icon">👕</span> XL</label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="koszulka" id="kos-xxl" value="XXL" />
+            <label for="kos-xxl"><span class="tile-icon">👕</span> XXL</label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="koszulka" id="kos-no"  value="Nie potrzebuję" />
+            <label for="kos-no"><span class="tile-icon">🚫</span> Bez koszulki</label>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-prev>← Wstecz</button>
+          <button type="button" class="btn btn-primary" data-next>Dalej →</button>
+        </div>
+      </section>
+
+      <!-- ─────────── STEP 4 – Uwagi + Podsumowanie ─────────── -->
+      <section id="step-4" class="step-card" aria-label="Krok 5: Podsumowanie i wysyłka">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 200 100" width="180" aria-hidden="true">
+          <!-- Checklist paper -->
+          <rect x="40" y="10" width="120" height="80" rx="8" fill="#16213e" stroke="#2d3561" stroke-width="1.5"/>
+          <rect x="40" y="10" width="120" height="18" rx="8" fill="#e94560" opacity="0.6"/>
+          <rect x="40" y="20" width="120" height="8"  rx="0" fill="#e94560" opacity="0.6"/>
+          <!-- Lines -->
+          <line x1="56" y1="44" x2="148" y2="44" stroke="#2d3561" stroke-width="2"/>
+          <line x1="56" y1="58" x2="148" y2="58" stroke="#2d3561" stroke-width="2"/>
+          <line x1="56" y1="72" x2="120" y2="72" stroke="#2d3561" stroke-width="2"/>
+          <!-- Check marks -->
+          <polyline points="56,43 61,49 71,38" fill="none" stroke="#2ecc71" stroke-width="2.5" stroke-linecap="round"/>
+          <polyline points="56,57 61,63 71,52" fill="none" stroke="#2ecc71" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Rocket -->
+          <g transform="translate(148,55) rotate(-45)">
+            <ellipse cx="0" cy="0" rx="8" ry="16" fill="#f5a623" opacity="0.9"/>
+            <polygon points="-6,12 0,22 6,12" fill="#e94560" opacity="0.8"/>
+            <circle cx="0" cy="-2" r="4" fill="#fff" opacity="0.3"/>
+          </g>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">📋</span>
+        <h2>Prawie gotowe!</h2>
+        <p class="step-desc">Sprawdź swoje odpowiedzi i wyślij zgłoszenie.</p>
+
+        <!-- Summary -->
+        <div class="summary-box" aria-label="Podsumowanie odpowiedzi">
+          <div class="summary-row">
+            <span class="s-key">👤 Imię i nazwisko</span>
+            <span class="s-val" id="s-imie">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="s-key">📧 E-mail</span>
+            <span class="s-val" id="s-email">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="s-key">📅 Obecność</span>
+            <span class="s-val" id="s-obecnosc">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="s-key">🛏️ Nocleg</span>
+            <span class="s-val" id="s-nocleg">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="s-key">🚌 Transport</span>
+            <span class="s-val" id="s-transport">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="s-key">👕 Koszulka</span>
+            <span class="s-val" id="s-koszulka">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="s-key">💬 Uwagi</span>
+            <span class="s-val" id="s-uwagi">—</span>
+          </div>
+        </div>
+
+        <!-- Extra notes -->
+        <div class="form-group">
+          <label for="uwagi">Dodatkowe uwagi (opcjonalnie)</label>
+          <textarea
+            id="uwagi"
+            name="uwagi"
+            placeholder="Alergie, specjalne wymagania, cokolwiek chcesz dodać…"
+          ></textarea>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-prev>← Wstecz</button>
+          <button
+            type="button"
+            id="btn-submit"
+            class="btn btn-submit"
+            onclick="submitForm()"
+          >
+            🚀 Wyślij zgłoszenie
+          </button>
+        </div>
+      </section>
+
+    </form>
+
+    <!-- ===================== SUCCESS SCREEN ===================== -->
+    <div id="success-screen" class="step-card success-screen" role="alert" aria-live="polite">
+
+      <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 240 120" width="220" aria-hidden="true">
+        <defs>
+          <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f5a623;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#e94560;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <!-- Large check circle -->
+        <circle cx="120" cy="60" r="50" fill="url(#grad2)" opacity="0.15"/>
+        <circle cx="120" cy="60" r="40" fill="none" stroke="url(#grad2)" stroke-width="4"/>
+        <polyline points="100,60 115,75 145,45"
+          fill="none" stroke="#2ecc71" stroke-width="6"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Confetti -->
+        <circle cx="40"  cy="30" r="5" fill="#e94560" opacity="0.7"/>
+        <circle cx="60"  cy="10" r="4" fill="#f5a623" opacity="0.8"/>
+        <circle cx="200" cy="20" r="5" fill="#3498db" opacity="0.7"/>
+        <circle cx="220" cy="50" r="4" fill="#2ecc71" opacity="0.7"/>
+        <circle cx="30"  cy="80" r="3" fill="#9b59b6" opacity="0.7"/>
+        <circle cx="210" cy="90" r="4" fill="#f5a623" opacity="0.6"/>
+        <rect x="170" y="15" width="8" height="8" rx="2" fill="#e94560" opacity="0.6" transform="rotate(30 174 19)"/>
+        <rect x="45"  y="90" width="7" height="7" rx="2" fill="#3498db" opacity="0.6" transform="rotate(-20 48 93)"/>
+      </svg>
+
+      <span class="big-icon" aria-hidden="true">🎉</span>
+      <h2>Jesteś w składzie!</h2>
+      <p>
+        Dzięki za zgłoszenie! Informacje zostały zapisane.<br/>
+        Organizator odezwie się wkrótce z detalami. Szykuj się na legendarne wspomnienia! 🍺
+      </p>
+    </div>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+      <p>Zbudowane z ❤️ przez organizatora kawalerskiego &bull; GitHub Pages</p>
+    </footer>
+
+  </div><!-- /.app-wrapper -->
+
+  <!-- Scripts -->
+  <script src="js/form.js"></script>
+</body>
+</html>
