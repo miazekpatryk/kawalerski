@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Zaplanuj kawalerski krok po kroku!" />
+
+  <title>🏕️ Kawalerski — Plan przygody</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Animated background bubbles -->
+  <div class="bg-bubbles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="app-wrapper">
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="site-header">
+
+      <!-- SVG Hero Illustration – outdoor adventure -->
+      <svg
+        class="step-illustration"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 400 160"
+        width="360"
+        height="144"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f5a623;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <!-- Mountains -->
+        <polygon points="60,130 130,40 200,130"  fill="#2d3561" opacity="0.9"/>
+        <polygon points="140,130 220,50 300,130" fill="#1a1a2e" stroke="#2d3561" stroke-width="1"/>
+        <polygon points="240,130 300,70 360,130" fill="#2d3561" opacity="0.8"/>
+        <!-- Snow caps -->
+        <polygon points="130,40 115,75 145,75"  fill="#fff" opacity="0.15"/>
+        <polygon points="220,50 205,80 235,80"  fill="#fff" opacity="0.12"/>
+        <polygon points="300,70 288,95 312,95"  fill="#fff" opacity="0.1"/>
+        <!-- Trees (left) -->
+        <polygon points="20,130 35,100 50,130"  fill="#27ae60" opacity="0.7"/>
+        <polygon points="10,130 25,108 40,130"  fill="#2ecc71" opacity="0.5"/>
+        <!-- Trees (right) -->
+        <polygon points="355,130 370,102 385,130" fill="#27ae60" opacity="0.7"/>
+        <polygon points="365,130 378,110 391,130" fill="#2ecc71" opacity="0.5"/>
+        <!-- Sun / moon -->
+        <circle cx="330" cy="35" r="22" fill="#f5a623" opacity="0.25"/>
+        <circle cx="330" cy="35" r="15" fill="#f5a623" opacity="0.55"/>
+        <!-- Stars -->
+        <circle cx="50"  cy="25" r="2" fill="#fff" opacity="0.6"/>
+        <circle cx="80"  cy="15" r="1.5" fill="#fff" opacity="0.5"/>
+        <circle cx="200" cy="20" r="2" fill="#fff" opacity="0.5"/>
+        <circle cx="260" cy="10" r="1.5" fill="#fff" opacity="0.6"/>
+        <!-- Ground / water line -->
+        <rect x="0" y="130" width="400" height="30" rx="0" fill="#0d0d1a" opacity="0.5"/>
+        <!-- Campfire -->
+        <ellipse cx="195" cy="133" rx="12" ry="4" fill="#e94560" opacity="0.3"/>
+        <polygon points="190,133 195,110 200,133" fill="#f5a623" opacity="0.8"/>
+        <polygon points="192,133 195,118 198,133" fill="#e94560" opacity="0.7"/>
+        <polygon points="188,133 193,122 197,133" fill="#f5a623" opacity="0.5"/>
+      </svg>
+
+      <span class="logo-icon" aria-hidden="true">🏕️</span>
+      <h1>Kawalerski!</h1>
+      <p class="subtitle">Zaplanuj przygodę krok po kroku 🎉</p>
+    </header>
+
+    <!-- ===================== PROGRESS BAR ===================== -->
+    <div class="progress-wrap" role="progressbar" aria-label="Postęp formularza">
+      <div id="progressBar" class="progress-wrap" style="flex:1; margin:0; gap:8px;"></div>
+      <span id="progressLabel" class="progress-label"></span>
+    </div>
+
+    <!-- ===================== FORM ===================== -->
+    <form id="rsvpForm" novalidate>
+
+      <!-- ─────────── EKRAN 1 – Powitanie / Nick ─────────── -->
+      <section id="step-0" class="step-card" aria-label="Ekran 1: Powitanie">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 200 110" width="180" aria-hidden="true">
+          <!-- Person silhouette -->
+          <circle cx="100" cy="35" r="22" fill="#e94560" opacity="0.7"/>
+          <circle cx="100" cy="28" r="10" fill="#fff" opacity="0.2"/>
+          <ellipse cx="100" cy="82" rx="38" ry="20" fill="#e94560" opacity="0.5"/>
+          <!-- Crown -->
+          <polygon points="80,18 85,5 100,14 115,5 120,18" fill="#f5a623" opacity="0.9"/>
+          <circle cx="80"  cy="18" r="3" fill="#fff" opacity="0.6"/>
+          <circle cx="100" cy="14" r="3" fill="#fff" opacity="0.6"/>
+          <circle cx="120" cy="18" r="3" fill="#fff" opacity="0.6"/>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">👑</span>
+        <h2>Hej, byk!</h2>
+        <p class="step-desc">Zanim zaplanujemy przygodę, powiedz nam jak mamy do Ciebie mówić.</p>
+
+        <div class="form-group">
+          <label for="nick">Wpisz swój nick, byku</label>
+          <input
+            type="text"
+            id="nick"
+            name="nick"
+            placeholder="np. Mistrz Grilla 🔥"
+            autocomplete="nickname"
+            required
+          />
+          <p id="err-nick" class="field-error" role="alert"></p>
+        </div>
+
+        <div class="btn-row" style="justify-content:center;">
+          <button type="button" class="btn btn-primary" data-next style="padding:14px 48px;font-size:1.05rem;">
+            Zaczynamy 🚀
+          </button>
+        </div>
+      </section>
+
+      <!-- ─────────── EKRAN 2 – Aktywność ─────────── -->
+      <section id="step-1" class="step-card" aria-label="Ekran 2: Wybór aktywności">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 100" width="220" aria-hidden="true">
+          <!-- Hiker (spacer) -->
+          <circle cx="40" cy="25" r="10" fill="#e94560" opacity="0.8"/>
+          <line x1="40" y1="35" x2="40" y2="68" stroke="#e94560" stroke-width="3" stroke-linecap="round"/>
+          <line x1="40" y1="48" x2="25" y2="62" stroke="#e94560" stroke-width="3" stroke-linecap="round"/>
+          <line x1="40" y1="48" x2="55" y2="58" stroke="#e94560" stroke-width="3" stroke-linecap="round"/>
+          <line x1="40" y1="68" x2="28" y2="85" stroke="#e94560" stroke-width="3" stroke-linecap="round"/>
+          <line x1="40" y1="68" x2="52" y2="85" stroke="#e94560" stroke-width="3" stroke-linecap="round"/>
+          <!-- Cyclist -->
+          <circle cx="120" cy="25" r="10" fill="#3498db" opacity="0.8"/>
+          <circle cx="105" cy="72" r="14" fill="none" stroke="#3498db" stroke-width="3"/>
+          <circle cx="135" cy="72" r="14" fill="none" stroke="#3498db" stroke-width="3"/>
+          <polyline points="120,35 112,55 120,60 128,55" fill="none" stroke="#3498db" stroke-width="3" stroke-linecap="round"/>
+          <line x1="120" y1="35" x2="105" y2="55" stroke="#3498db" stroke-width="3" stroke-linecap="round"/>
+          <!-- Kayaker -->
+          <circle cx="200" cy="25" r="10" fill="#2ecc71" opacity="0.8"/>
+          <ellipse cx="200" cy="68" rx="32" ry="10" fill="#2ecc71" opacity="0.4"/>
+          <line x1="200" y1="35" x2="200" y2="60" stroke="#2ecc71" stroke-width="3"/>
+          <line x1="175" y1="55" x2="225" y2="55" stroke="#2ecc71" stroke-width="3" stroke-linecap="round"/>
+          <line x1="175" y1="55" x2="168" y2="68" stroke="#2ecc71" stroke-width="3" stroke-linecap="round"/>
+          <line x1="225" y1="55" x2="232" y2="68" stroke="#2ecc71" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">🏃</span>
+        <h2>Co robimy?</h2>
+        <p class="step-desc">Wybierz główną aktywność na kawalerski.</p>
+
+        <div class="choice-grid" data-auto-advance="true">
+          <div class="choice-tile">
+            <input type="radio" name="aktywnosc" id="ak-spacer" value="Spacer" />
+            <label for="ak-spacer">
+              <span class="tile-icon">🥾</span>
+              Spacer
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="aktywnosc" id="ak-rower" value="Rower" />
+            <label for="ak-rower">
+              <span class="tile-icon">🚴</span>
+              Rower
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="aktywnosc" id="ak-kajaki" value="Kajaki" />
+            <label for="ak-kajaki">
+              <span class="tile-icon">🛶</span>
+              Kajaki
+            </label>
+          </div>
+        </div>
+        <p id="err-aktywnosc" class="field-error" role="alert"></p>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-prev>← Wstecz</button>
+          <button type="button" class="btn btn-primary" data-next>Dalej →</button>
+        </div>
+      </section>
+
+      <!-- ─────────── EKRAN 3 – Teren (dynamiczny) ─────────── -->
+      <section id="step-2" class="step-card" aria-label="Ekran 3: Wybór terenu">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 100" width="220" aria-hidden="true">
+          <!-- Forest -->
+          <polygon points="20,90 35,55 50,90"  fill="#27ae60" opacity="0.8"/>
+          <polygon points="10,90 25,62 40,90"  fill="#2ecc71" opacity="0.6"/>
+          <!-- Mountain -->
+          <polygon points="90,90 130,30 170,90" fill="#2d3561" opacity="0.9"/>
+          <polygon points="130,30 118,58 142,58" fill="#fff" opacity="0.12"/>
+          <!-- Sea waves -->
+          <path d="M185,70 Q195,60 205,70 Q215,80 225,70" fill="none" stroke="#3498db" stroke-width="3" stroke-linecap="round"/>
+          <path d="M185,82 Q195,72 205,82 Q215,92 225,82" fill="none" stroke="#3498db" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+          <!-- Map pin -->
+          <circle cx="130" cy="30" r="7" fill="#e94560" opacity="0.85"/>
+          <line x1="130" y1="37" x2="130" y2="48" stroke="#e94560" stroke-width="2.5"/>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">🗺️</span>
+        <h2>Gdzie jedziemy?</h2>
+        <p class="step-desc" id="terrain-desc">Wybierz teren przygody.</p>
+
+        <!-- Dynamically populated by JS based on activity selection -->
+        <div class="choice-grid" id="terrain-grid" data-auto-advance="true">
+          <!-- filled by renderTerrainOptions() in form.js -->
+        </div>
+        <p id="err-teren" class="field-error" role="alert"></p>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-prev>← Wstecz</button>
+          <button type="button" class="btn btn-primary" data-next>Dalej →</button>
+        </div>
+      </section>
+
+      <!-- ─────────── EKRAN 4 – Nocleg ─────────── -->
+      <section id="step-3" class="step-card" aria-label="Ekran 4: Nocleg">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 110" width="220" aria-hidden="true">
+          <!-- Cabin (Samotnia) -->
+          <polygon points="35,65 60,40 85,65" fill="#e94560" opacity="0.7"/>
+          <rect x="40" y="65" width="40" height="30" rx="3" fill="#16213e" stroke="#2d3561" stroke-width="1.5"/>
+          <rect x="52" y="76" width="16" height="19" rx="2" fill="#e94560" opacity="0.45"/>
+          <!-- Domki (small houses) -->
+          <polygon points="108,65 125,48 142,65" fill="#3498db" opacity="0.7"/>
+          <rect x="112" y="65" width="26" height="22" rx="2" fill="#16213e" stroke="#2d3561" stroke-width="1.5"/>
+          <rect x="117" y="72" width="10" height="15" rx="2" fill="#3498db" opacity="0.45"/>
+          <polygon points="148,65 162,50 176,65" fill="#3498db" opacity="0.5"/>
+          <rect x="151" y="65" width="22" height="22" rx="2" fill="#16213e" stroke="#2d3561" stroke-width="1.5"/>
+          <!-- Tent (Namioty) -->
+          <polygon points="195,87 220,45 245,87" fill="#2ecc71" opacity="0.75"/>
+          <polygon points="205,87 220,58 235,87" fill="#2ecc71" opacity="0.45"/>
+          <line x1="220" y1="45" x2="220" y2="87" stroke="#fff" stroke-width="1.5" opacity="0.3"/>
+          <!-- Moon + stars -->
+          <circle cx="28" cy="20" r="10" fill="#f5a623" opacity="0.2"/>
+          <circle cx="28" cy="20" r="7"  fill="#f5a623" opacity="0.5"/>
+          <circle cx="50" cy="12" r="2" fill="#fff" opacity="0.5"/>
+          <circle cx="65" cy="22" r="1.5" fill="#fff" opacity="0.4"/>
+          <circle cx="165" cy="15" r="2" fill="#fff" opacity="0.5"/>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">🏕️</span>
+        <h2>Gdzie śpimy?</h2>
+        <p class="step-desc">Wybierz rodzaj noclegu.</p>
+
+        <div class="choice-grid" data-auto-advance="true">
+          <div class="choice-tile">
+            <input type="radio" name="nocleg" id="noc-samotnia" value="Samotnia" />
+            <label for="noc-samotnia">
+              <span class="tile-icon">🏠</span>
+              Samotnia
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="nocleg" id="noc-domki" value="Domki" />
+            <label for="noc-domki">
+              <span class="tile-icon">🛖</span>
+              Domki
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="radio" name="nocleg" id="noc-namioty" value="Namioty" />
+            <label for="noc-namioty">
+              <span class="tile-icon">⛺</span>
+              Namioty
+            </label>
+          </div>
+        </div>
+        <p id="err-nocleg" class="field-error" role="alert"></p>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-prev>← Wstecz</button>
+          <button type="button" class="btn btn-primary" data-next>Dalej →</button>
+        </div>
+      </section>
+
+      <!-- ─────────── EKRAN 5 – Udogodnienia ─────────── -->
+      <section id="step-4" class="step-card" aria-label="Ekran 5: Udogodnienia">
+
+        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 240 100" width="220" aria-hidden="true">
+          <!-- Pool (Basen) -->
+          <rect x="10" y="50" width="60" height="40" rx="6" fill="#3498db" opacity="0.25" stroke="#3498db" stroke-width="2"/>
+          <path d="M10,65 Q25,55 40,65 Q55,75 70,65" fill="none" stroke="#3498db" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M10,78 Q25,68 40,78 Q55,88 70,78" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          <!-- Jacuzzi -->
+          <ellipse cx="130" cy="75" rx="35" ry="18" fill="#9b59b6" opacity="0.2" stroke="#9b59b6" stroke-width="2"/>
+          <circle cx="115" cy="72" r="3" fill="#9b59b6" opacity="0.5"/>
+          <circle cx="130" cy="68" r="3" fill="#9b59b6" opacity="0.5"/>
+          <circle cx="145" cy="72" r="3" fill="#9b59b6" opacity="0.5"/>
+          <circle cx="122" cy="80" r="3" fill="#9b59b6" opacity="0.4"/>
+          <circle cx="138" cy="80" r="3" fill="#9b59b6" opacity="0.4"/>
+          <!-- Balia (wooden barrel) -->
+          <ellipse cx="210" cy="60" rx="22" ry="8" fill="#f5a623" opacity="0.4"/>
+          <rect x="188" y="60" width="44" height="32" rx="4" fill="#16213e" stroke="#f5a623" stroke-width="2"/>
+          <ellipse cx="210" cy="92" rx="22" ry="6" fill="#f5a623" opacity="0.3"/>
+          <line x1="200" y1="60" x2="200" y2="92" stroke="#f5a623" stroke-width="1.5" opacity="0.4"/>
+          <line x1="210" y1="60" x2="210" y2="92" stroke="#f5a623" stroke-width="1.5" opacity="0.4"/>
+          <line x1="220" y1="60" x2="220" y2="92" stroke="#f5a623" stroke-width="1.5" opacity="0.4"/>
+          <!-- Steam -->
+          <path d="M205,52 Q208,44 205,36" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+          <path d="M215,50 Q218,42 215,34" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.25" stroke-linecap="round"/>
+        </svg>
+
+        <span class="step-icon" aria-hidden="true">💆</span>
+        <h2>Jakie udogodnienia?</h2>
+        <p class="step-desc">Możesz zaznaczyć kilka opcji.</p>
+
+        <div class="choice-grid" data-auto-advance="false">
+          <div class="choice-tile">
+            <input type="checkbox" name="udogodnienia" id="ud-basen" value="Basen" />
+            <label for="ud-basen">
+              <span class="tile-icon">🏊</span>
+              Basen
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="checkbox" name="udogodnienia" id="ud-jacuzzi" value="Jacuzzi" />
+            <label for="ud-jacuzzi">
+              <span class="tile-icon">🛁</span>
+              Jacuzzi
+            </label>
+          </div>
+          <div class="choice-tile">
+            <input type="checkbox" name="udogodnienia" id="ud-balia" value="Balia" />
+            <label for="ud-balia">
+              <span class="tile-icon">🪣</span>
+              Balia
+            </label>
+          </div>
+        </div>
+        <p id="err-udogodnienia" class="field-error" role="alert"></p>
+
+        <div class="btn-row" style="justify-content:center; margin-top:32px;">
+          <button type="button" class="btn btn-secondary" data-prev>← Wstecz</button>
+          <button
+            type="button"
+            id="btn-submit"
+            class="btn btn-submit"
+            onclick="submitForm()"
+            style="padding:14px 36px;"
+          >
+            ✅ Potwierdź plan
+          </button>
+        </div>
+      </section>
+
+    </form>
+
+    <!-- ===================== EKRAN 6 – Podziękowanie ===================== -->
+    <div id="success-screen" class="step-card success-screen" role="alert" aria-live="polite">
+
+      <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 240 110" width="220" aria-hidden="true">
+        <defs>
+          <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f5a623;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#e94560;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <!-- Large check circle -->
+        <circle cx="120" cy="55" r="46" fill="url(#grad2)" opacity="0.12"/>
+        <circle cx="120" cy="55" r="36" fill="none" stroke="url(#grad2)" stroke-width="4"/>
+        <polyline points="102,55 116,70 142,38"
+          fill="none" stroke="#2ecc71" stroke-width="6"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Confetti shapes -->
+        <circle cx="35"  cy="28" r="5" fill="#e94560" opacity="0.7"/>
+        <circle cx="55"  cy="10" r="4" fill="#f5a623" opacity="0.8"/>
+        <circle cx="200" cy="18" r="5" fill="#3498db" opacity="0.7"/>
+        <circle cx="218" cy="48" r="4" fill="#2ecc71" opacity="0.7"/>
+        <circle cx="28"  cy="78" r="3" fill="#9b59b6" opacity="0.7"/>
+        <circle cx="208" cy="85" r="4" fill="#f5a623" opacity="0.6"/>
+        <rect x="168" y="12" width="8" height="8" rx="2" fill="#e94560" opacity="0.6" transform="rotate(30 172 16)"/>
+        <rect x="43"  y="88" width="7" height="7" rx="2" fill="#3498db" opacity="0.6" transform="rotate(-20 46 91)"/>
+      </svg>
+
+      <span class="big-icon" aria-hidden="true">🎉</span>
+      <h2>Decyzja podjęta!</h2>
+      <p>
+        Pakuj walizy, widzimy się na miejscu! 🎒<br/>
+        <span style="color:var(--clr-muted);font-size:0.88rem;">
+          Organizator dostał Twoje zgłoszenie i odezwie się z detalami.
+        </span>
+      </p>
+    </div>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+      <p>Zbudowane z ❤️ przez organizatora kawalerskiego &bull; GitHub Pages</p>
+    </footer>
+
+  </div><!-- /.app-wrapper -->
+
+  <!-- Scripts -->
+  <script src="js/form.js"></script>
+</body>
+</html>
