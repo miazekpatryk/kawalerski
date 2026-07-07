@@ -7,14 +7,14 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --clr-bg:        #0d0d1a;
-  --clr-surface:   #1a1a2e;
-  --clr-card:      #16213e;
+  --clr-bg:        #f4f6f9;
+  --clr-surface:   #ffffff;
+  --clr-card:      #ffffff;
   --clr-accent:    #e94560;
   --clr-accent2:   #f5a623;
-  --clr-text:      #eaeaea;
-  --clr-muted:     #8892b0;
-  --clr-border:    #2d3561;
+  --clr-text:      #1a1a2e;
+  --clr-muted:     #6b7280;
+  --clr-border:    #e2e8f0;
   --radius:        16px;
   --transition:    0.3s ease;
   --font-heading:  'Montserrat', sans-serif;
@@ -49,7 +49,7 @@ body {
   position: absolute;
   bottom: -160px;
   border-radius: 50%;
-  background: rgba(233, 69, 96, 0.07);
+  background: rgba(233, 69, 96, 0.04);
   animation: float-up linear infinite;
 }
 .bg-bubbles span:nth-child(1)  { width: 80px;  height: 80px;  left: 10%; animation-duration: 8s;  animation-delay: 0s; }
@@ -135,6 +135,7 @@ body {
   padding: 36px 32px;
   display: none;
   animation: fade-in 0.4s ease;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
 }
 .step-card.active { display: block; }
 
@@ -200,6 +201,7 @@ body {
   padding: 12px 16px;
   transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 .form-group input:focus,
 .form-group textarea:focus,
@@ -240,13 +242,24 @@ body {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--clr-text);
-  transition: border-color var(--transition), background var(--transition), transform var(--transition);
+  transition: border-color var(--transition), background var(--transition), transform var(--transition), box-shadow var(--transition);
   text-transform: none;
   letter-spacing: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 .choice-tile label .tile-icon {
   font-size: 28px;
   line-height: 1;
+}
+/* Tile image */
+.choice-tile label .tile-img,
+.tile-img {
+  width: 100%;
+  max-width: 96px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
 }
 .choice-tile input:checked + label {
   border-color: var(--clr-accent);
@@ -260,7 +273,8 @@ body {
 }
 .choice-tile label:hover {
   border-color: var(--clr-accent2);
-  transform: scale(1.02);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* ---------- Buttons ---------- */
@@ -309,6 +323,7 @@ body {
   border-radius: 12px;
   padding: 20px 24px;
   margin-bottom: 24px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 .summary-row {
   display: flex;
@@ -414,80 +429,6 @@ body {
 .img-placeholder--teren        { background: linear-gradient(135deg, #458B74, #7CFC00); }
 .img-placeholder--nocleg       { background: linear-gradient(135deg, #191970, #4169E1); }
 .img-placeholder--udogodnienia { background: linear-gradient(135deg, #8A2BE2, #DA70D6); }
-
-/* ---------- Per-segment theming ---------- */
-
-/* Aktywność – Pomarańczowa */
-#step-1 h2 {
-  background: linear-gradient(135deg, #FF7F50, #FFD700);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-#step-1 .choice-tile input:checked + label {
-  border-color: #FF7F50;
-  background: rgba(255, 127, 80, 0.14);
-}
-#step-1 .choice-tile label:hover { border-color: #FFD700; }
-#step-1 .btn-primary {
-  background: linear-gradient(135deg, #FF7F50, #A52A2A);
-  box-shadow: 0 4px 20px rgba(255, 127, 80, 0.4);
-}
-#step-1 .btn-primary:hover { box-shadow: 0 6px 28px rgba(255, 127, 80, 0.55); }
-
-/* Teren – Zielona */
-#step-2 h2 {
-  background: linear-gradient(135deg, #458B74, #7CFC00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-#step-2 .choice-tile input:checked + label {
-  border-color: #458B74;
-  background: rgba(69, 139, 116, 0.14);
-}
-#step-2 .choice-tile label:hover { border-color: #7CFC00; }
-#step-2 .btn-primary {
-  background: linear-gradient(135deg, #458B74, #8B814C);
-  box-shadow: 0 4px 20px rgba(69, 139, 116, 0.4);
-}
-#step-2 .btn-primary:hover { box-shadow: 0 6px 28px rgba(69, 139, 116, 0.55); }
-
-/* Nocleg – Ciemnogranatowa */
-#step-3 h2 {
-  background: linear-gradient(135deg, #4169E1, #B0C4DE);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-#step-3 .choice-tile input:checked + label {
-  border-color: #4169E1;
-  background: rgba(65, 105, 225, 0.14);
-}
-#step-3 .choice-tile label:hover { border-color: #B0C4DE; }
-#step-3 .btn-primary {
-  background: linear-gradient(135deg, #191970, #4169E1);
-  box-shadow: 0 4px 20px rgba(65, 105, 225, 0.4);
-}
-#step-3 .btn-primary:hover { box-shadow: 0 6px 28px rgba(65, 105, 225, 0.55); }
-
-/* Udogodnienia – Fioletowa */
-#step-4 h2 {
-  background: linear-gradient(135deg, #8A2BE2, #DA70D6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-#step-4 .choice-tile input[type="checkbox"]:checked + label {
-  border-color: #8A2BE2;
-  background: rgba(138, 43, 226, 0.14);
-}
-#step-4 .choice-tile label:hover { border-color: #DA70D6; }
-#step-4 .btn-submit {
-  background: linear-gradient(135deg, #8A2BE2, #DA70D6);
-  box-shadow: 0 4px 20px rgba(138, 43, 226, 0.4);
-}
-#step-4 .btn-submit:hover { box-shadow: 0 6px 28px rgba(138, 43, 226, 0.55); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 480px) {
