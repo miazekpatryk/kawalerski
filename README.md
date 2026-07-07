@@ -14,6 +14,11 @@ kawalerski/
 │   └── style.css           ← Stylizacja (dark theme, animacje)
 ├── js/
 │   └── form.js             ← Logika formularza + wysyłka
+├── img/                    ← 🖼️ Tu wrzucasz własne zdjęcia/grafiki
+│   ├── aktywnosc.jpg       ← Ekran 2: Aktywność
+│   ├── teren.jpg           ← Ekran 3: Teren
+│   ├── nocleg.jpg          ← Ekran 4: Nocleg
+│   └── udogodnienia.jpg    ← Ekran 5: Udogodnienia
 ├── apps-script/
 │   └── Code.gs             ← Backend Google Apps Script (opcja B)
 └── _config.yml             ← Konfiguracja GitHub Pages
@@ -112,7 +117,9 @@ Otwórz `index.html` – możesz swobodnie edytować:
 
 ## 🎨 Personalizacja
 
-- Grafiki to **inline SVG** – można je zastąpić własnymi obrazami `<img>`.
+- **Własne zdjęcia** wrzuć do folderu `img/` (szczegóły: [`img/README.md`](img/README.md)).
+  Oczekiwane pliki: `aktywnosc.jpg`, `teren.jpg`, `nocleg.jpg`, `udogodnienia.jpg`.
+- Grafiki dekoracyjne to **inline SVG** – można je zastąpić własnymi obrazami `<img>`.
 - Kolory są definiowane przez zmienne CSS w `:root` (plik `css/style.css`).
 - Kroki formularza to sekcje `<section id="step-N">` – można je dodawać/usuwać
   (pamiętaj o zaktualizowaniu stałej `TOTAL_STEPS` w `js/form.js`).
