@@ -392,6 +392,103 @@ body {
   font-size: 0.78rem;
 }
 
+/* ---------- Image placeholders ---------- */
+.img-placeholder {
+  position: relative;
+  width: 220px;
+  height: 140px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.img-placeholder--aktywnosc    { background: linear-gradient(135deg, #FF7F50, #FFD700); }
+.img-placeholder--teren        { background: linear-gradient(135deg, #458B74, #7CFC00); }
+.img-placeholder--nocleg       { background: linear-gradient(135deg, #191970, #4169E1); }
+.img-placeholder--udogodnienia { background: linear-gradient(135deg, #8A2BE2, #DA70D6); }
+
+/* ---------- Per-segment theming ---------- */
+
+/* Aktywność – Pomarańczowa */
+#step-1 h2 {
+  background: linear-gradient(135deg, #FF7F50, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#step-1 .choice-tile input:checked + label {
+  border-color: #FF7F50;
+  background: rgba(255, 127, 80, 0.14);
+}
+#step-1 .choice-tile label:hover { border-color: #FFD700; }
+#step-1 .btn-primary {
+  background: linear-gradient(135deg, #FF7F50, #A52A2A);
+  box-shadow: 0 4px 20px rgba(255, 127, 80, 0.4);
+}
+#step-1 .btn-primary:hover { box-shadow: 0 6px 28px rgba(255, 127, 80, 0.55); }
+
+/* Teren – Zielona */
+#step-2 h2 {
+  background: linear-gradient(135deg, #458B74, #7CFC00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#step-2 .choice-tile input:checked + label {
+  border-color: #458B74;
+  background: rgba(69, 139, 116, 0.14);
+}
+#step-2 .choice-tile label:hover { border-color: #7CFC00; }
+#step-2 .btn-primary {
+  background: linear-gradient(135deg, #458B74, #8B814C);
+  box-shadow: 0 4px 20px rgba(69, 139, 116, 0.4);
+}
+#step-2 .btn-primary:hover { box-shadow: 0 6px 28px rgba(69, 139, 116, 0.55); }
+
+/* Nocleg – Ciemnogranatowa */
+#step-3 h2 {
+  background: linear-gradient(135deg, #4169E1, #B0C4DE);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#step-3 .choice-tile input:checked + label {
+  border-color: #4169E1;
+  background: rgba(65, 105, 225, 0.14);
+}
+#step-3 .choice-tile label:hover { border-color: #B0C4DE; }
+#step-3 .btn-primary {
+  background: linear-gradient(135deg, #191970, #4169E1);
+  box-shadow: 0 4px 20px rgba(65, 105, 225, 0.4);
+}
+#step-3 .btn-primary:hover { box-shadow: 0 6px 28px rgba(65, 105, 225, 0.55); }
+
+/* Udogodnienia – Fioletowa */
+#step-4 h2 {
+  background: linear-gradient(135deg, #8A2BE2, #DA70D6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#step-4 .choice-tile input[type="checkbox"]:checked + label {
+  border-color: #8A2BE2;
+  background: rgba(138, 43, 226, 0.14);
+}
+#step-4 .choice-tile label:hover { border-color: #DA70D6; }
+#step-4 .btn-submit {
+  background: linear-gradient(135deg, #8A2BE2, #DA70D6);
+  box-shadow: 0 4px 20px rgba(138, 43, 226, 0.4);
+}
+#step-4 .btn-submit:hover { box-shadow: 0 6px 28px rgba(138, 43, 226, 0.55); }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 480px) {
   .step-card { padding: 24px 18px; }
@@ -400,4 +497,5 @@ body {
   .btn { width: 100%; text-align: center; }
   .summary-row { flex-direction: column; gap: 2px; }
   .summary-row .s-key { min-width: unset; }
+  .img-placeholder { width: 100%; height: 120px; }
 }
