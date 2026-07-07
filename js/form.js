@@ -28,18 +28,18 @@ const CONFIG = {
    ────────────────────────────────────────────────────────── */
 const TERRAIN_OPTIONS = {
   Spacer:  [
-    { value: 'Las',  icon: '🌲', label: 'Las'  },
-    { value: 'Góry', icon: '⛰️', label: 'Góry' },
-    { value: 'Morze',icon: '🌊', label: 'Morze'},
+    { value: 'Las',  img: 'img/las.png',   label: 'Las'  },
+    { value: 'Góry', img: 'img/gory.png',  label: 'Góry' },
+    { value: 'Morze',img: 'img/morze.png', label: 'Morze'},
   ],
   Rower:   [
-    { value: 'Las',  icon: '🌲', label: 'Las'  },
-    { value: 'Góry', icon: '⛰️', label: 'Góry' },
+    { value: 'Las',  img: 'img/las.png',  label: 'Las'  },
+    { value: 'Góry', img: 'img/gory.png', label: 'Góry' },
   ],
   Kajaki:  [
-    { value: 'Góry',   icon: '⛰️',  label: 'Góry'   },
-    { value: 'Rzeki',  icon: '🏞️',  label: 'Rzeki'  },
-    { value: 'Jeziora',icon: '🏔️',  label: 'Jeziora'},
+    { value: 'Góry',   img: 'img/gory.png',    label: 'Góry'   },
+    { value: 'Rzeki',  img: 'img/rzeki.png',   label: 'Rzeki'  },
+    { value: 'Jeziora',img: 'img/jeziora.png', label: 'Jeziora'},
   ],
 };
 
@@ -49,13 +49,12 @@ const TERRAIN_OPTIONS = {
 let currentStep = 0;
 const TOTAL_STEPS = 5; // ekrany 1-5 (bez ekranu podziękowania)
 
-const formData = {
-  nick:          '',
-  aktywnosc:     '',
-  teren:         '',
-  nocleg:        '',
-  udogodnienia:  '',
-  timestamp:     '',
+let wyjazdDane = {
+  nick:         '',
+  aktywnosc:    '',
+  teren:        '',
+  nocleg:       '',
+  udogodnienia: [],
 };
 
 /* ──────────────────────────────────────────────────────────
@@ -105,40 +104,40 @@ function renderTerrainOptions() {
   const grid = document.getElementById('terrain-grid');
   if (!grid) return;
 
-  const options = TERRAIN_OPTIONS[formData.aktywnosc] || [];
+  const options = TERRAIN_OPTIONS[wyjazdDane.aktywnosc] || [];
   grid.innerHTML = '';
 
-  options.forEach(({ value, icon, label }) => {
+  options.forEach(({ value, img, label }) => {
     const id = `ter-${value.toLowerCase()}`;
     const tile = document.createElement('div');
     tile.className = 'choice-tile';
     tile.innerHTML = `
       <input type="radio" name="teren" id="${id}" value="${value}" />
       <label for="${id}">
-        <span class="tile-icon">${icon}</span>
+        <img src="${img}" alt="${label}" class="tile-img" />
         ${label}
       </label>`;
     grid.appendChild(tile);
   });
 
   // Re-select previously chosen terrain if it's still valid
-  if (formData.teren) {
-    const prev = grid.querySelector(`input[value="${formData.teren}"]`);
+  if (wyjazdDane.teren) {
+    const prev = grid.querySelector(`input[value="${wyjazdDane.teren}"]`);
     if (prev) prev.checked = true;
   }
 
   // Re-bind auto-advance for newly created radios
   grid.querySelectorAll('input[type="radio"]').forEach(radio => {
     radio.addEventListener('change', () => {
-      formData.teren = radio.value;
+      wyjazdDane.teren = radio.value;
       setTimeout(() => nextStep(), 350);
     });
   });
 
   // Update step description
   const desc = document.getElementById('terrain-desc');
-  if (desc && formData.aktywnosc) {
-    desc.textContent = `Wybrałeś: ${formData.aktywnosc}. Teraz wybierz teren.`;
+  if (desc && wyjazdDane.aktywnosc) {
+    desc.textContent = `Wybrałeś: ${wyjazdDane.aktywnosc}. Teraz wybierz teren.`;
   }
 }
 
@@ -269,22 +268,21 @@ function getCheckboxValues(name) {
    ────────────────────────────────────────────────────────── */
 function collectCurrentStep() {
   if (currentStep === 0) {
-    formData.nick = document.getElementById('nick')?.value.trim() || '';
+    wyjazdDane.nick = document.getElementById('nick')?.value.trim() || '';
   }
   if (currentStep === 1) {
-    formData.aktywnosc = getRadioValue('aktywnosc') || '';
+    wyjazdDane.aktywnosc = getRadioValue('aktywnosc') || '';
     // Reset terrain when activity changes
-    formData.teren = '';
+    wyjazdDane.teren = '';
   }
   if (currentStep === 2) {
-    formData.teren = getRadioValue('teren') || '';
+    wyjazdDane.teren = getRadioValue('teren') || '';
   }
   if (currentStep === 3) {
-    formData.nocleg = getRadioValue('nocleg') || '';
+    wyjazdDane.nocleg = getRadioValue('nocleg') || '';
   }
   if (currentStep === 4) {
-    const vals = getCheckboxValues('udogodnienia');
-    formData.udogodnienia = vals.length ? vals.join(', ') : 'Brak';
+    wyjazdDane.udogodnienia = getCheckboxValues('udogodnienia');
   }
 }
 
@@ -294,7 +292,19 @@ function collectCurrentStep() {
 async function submitForm() {
   collectCurrentStep(); // collect step 4 (udogodnienia)
 
-  formData.timestamp = new Date().toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw' });
+  console.log(wyjazdDane);
+
+  // ── WEBHOOK / FETCH PLACEHOLDER ──────────────────────────
+  // Tutaj wstaw funkcję fetch, aby wysłać wyjazdDane na zewnętrzny webhook lub formularz.
+  // Przykład:
+  // await fetch('TWOJ_WEBHOOK_URL', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(wyjazdDane),
+  // });
+  // ─────────────────────────────────────────────────────────
+
+  const timestamp = new Date().toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw' });
 
   const btn = document.getElementById('btn-submit');
   if (btn) {
@@ -308,8 +318,8 @@ async function submitForm() {
       : CONFIG.APPS_SCRIPT_URL;
 
     const payload = CONFIG.SUBMIT_METHOD === 'sheetdb'
-      ? JSON.stringify({ data: [{ ...formData }] })
-      : JSON.stringify({ ...formData });
+      ? JSON.stringify({ data: [{ ...wyjazdDane, timestamp }] })
+      : JSON.stringify({ ...wyjazdDane, timestamp, udogodnienia: wyjazdDane.udogodnienia.join(', ') || 'Brak' });
 
     const response = await fetch(url, {
       method: 'POST',
