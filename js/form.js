@@ -20,6 +20,7 @@
 const CONFIG = {
   SUBMIT_METHOD:   'sheetdb',                 // 'sheetdb' | 'apps_script'
   SHEETDB_URL:     'https://sheetdb.io/api/v1/p3b1col2s7tuk',        // np. https://sheetdb.io/api/v1/XXXXXX
+  APPS_SCRIPT_URL: '',                        // opcjonalnie, jeśli używasz apps_script
 };
 
 /* ──────────────────────────────────────────────────────────
@@ -351,12 +352,17 @@ async function submitForm() {
   }
 
   try {
-    const url = CONFIG.SUBMIT_METHOD === 'sheetdb'
-      ? CONFIG.SHEETDB_URL
-      : CONFIG.APPS_SCRIPT_URL;
+    const method = String(CONFIG.SUBMIT_METHOD || 'sheetdb').trim().toLowerCase();
+    const url = method === 'apps_script'
+      ? String(CONFIG.APPS_SCRIPT_URL || '').trim()
+      : String(CONFIG.SHEETDB_URL || '').trim();
 
-    const payload = CONFIG.SUBMIT_METHOD === 'sheetdb'
-      ? JSON.stringify({ data: [{ ...wyjazdDane, timestamp }] })
+    if (!url) {
+      throw new Error('Brak URL endpointu wysylki. Ustaw SHEETDB_URL lub APPS_SCRIPT_URL.');
+    }
+
+    const payload = method === 'sheetdb'
+      ? JSON.stringify({ data: [{ ...wyjazdDane, udogodnienia: wyjazdDane.udogodnienia.join(', ') || 'Brak', timestamp }] })
       : JSON.stringify({ ...wyjazdDane, timestamp, udogodnienia: wyjazdDane.udogodnienia.join(', ') || 'Brak' });
 
     const response = await fetch(url, {
@@ -374,7 +380,8 @@ async function submitForm() {
       btn.disabled = false;
       btn.innerHTML = '✅ Potwierdź plan';
     }
-    alert('Ups! Wystąpił błąd podczas wysyłania. Spróbuj ponownie lub skontaktuj się z organizatorem.');
+    const reason = err instanceof Error ? err.message : 'Nieznany blad';
+    alert(`Ups! Wystąpił błąd podczas wysyłania.\n\nSzczegóły: ${reason}`);
   }
 }
 
