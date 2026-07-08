@@ -19,8 +19,7 @@
  */
 const CONFIG = {
   SUBMIT_METHOD:   'sheetdb',                 // 'sheetdb' | 'apps_script'
-  SHEETDB_URL:     'TWOJ_SHEETDB_URL',        // np. https://sheetdb.io/api/v1/XXXXXX
-  APPS_SCRIPT_URL: 'TWOJ_APPS_SCRIPT_URL',   // URL opublikowanego Apps Script
+  SHEETDB_URL:     'https://sheetdb.io/api/v1/p3b1col2s7tuk',        // np. https://sheetdb.io/api/v1/XXXXXX
 };
 
 /* ──────────────────────────────────────────────────────────
@@ -288,7 +287,7 @@ function showNickFailCard() {
     showStep(0);
     document.getElementById('nick')?.focus();
     nickFailTimeout = null;
-  }, 1700);
+  }, 3200);
 }
 
 function getRadioValue(name) {
