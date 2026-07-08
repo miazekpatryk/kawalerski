@@ -408,6 +408,24 @@ body {
   font-size: 1rem;
   line-height: 1.6;
 }
+.success-note {
+  margin-top: 18px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+.map-wrap {
+  margin-top: 8px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--clr-border);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+.success-map {
+  width: 100%;
+  min-height: 320px;
+  border: 0;
+  display: block;
+}
 
 /* ---------- Spinner ---------- */
 .spinner {
@@ -463,4 +481,5 @@ body {
   .btn { width: 100%; text-align: center; }
   .summary-row { flex-direction: column; gap: 2px; }
   .summary-row .s-key { min-width: unset; }
+  .success-map { min-height: 260px; }
 }
