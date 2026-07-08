@@ -47,15 +47,6 @@
       <!-- ─────────── EKRAN 1 – Powitanie / Nick ─────────── -->
       <section id="step-0" class="step-card" aria-label="Ekran 1: Powitanie">
 
-        <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 200 110" width="180" aria-hidden="true">
-          <!-- Crown -->
-          <polygon points="80,18 85,5 100,14 115,5 120,18" fill="#f5a623" opacity="0.9"/>
-          <circle cx="80"  cy="18" r="3" fill="#fff" opacity="0.6"/>
-          <circle cx="100" cy="14" r="3" fill="#fff" opacity="0.6"/>
-          <circle cx="120" cy="18" r="3" fill="#fff" opacity="0.6"/>
-        </svg>
-
         <span class="step-icon" aria-hidden="true">👑</span>
         <h2>Witaj graczu</h2>
         <p class="step-desc">Zanim zaplanujemy przygodę, powiedz nam jak mamy do Ciebie mówić.</p>
@@ -78,6 +69,13 @@
             Zaczynamy 🚀
           </button>
         </div>
+      </section>
+
+      <!-- ─────────── EKRAN BŁĘDU – BRAK EFEKTU ─────────── -->
+      <section id="effect-fail-card" class="step-card fail-card" aria-live="assertive" aria-label="Błąd efektu nicku">
+        <span class="fail-signal" aria-hidden="true"></span>
+        <h2 class="fail-title">BRAK EFEKTU</h2>
+        <p class="fail-desc">To nie ten nick. Wracamy do wyboru nicku...</p>
       </section>
 
       <!-- ─────────── EKRAN 2 – Aktywność ─────────── -->
@@ -225,31 +223,6 @@
 
     <!-- ===================== EKRAN 6 – Podziękowanie ===================== -->
     <div id="success-screen" class="step-card success-screen" role="alert" aria-live="polite">
-
-      <svg class="step-illustration" xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 240 110" width="220" aria-hidden="true">
-        <defs>
-          <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#f5a623;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#e94560;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <!-- Large check circle -->
-        <circle cx="120" cy="55" r="46" fill="url(#grad2)" opacity="0.12"/>
-        <circle cx="120" cy="55" r="36" fill="none" stroke="url(#grad2)" stroke-width="4"/>
-        <polyline points="102,55 116,70 142,38"
-          fill="none" stroke="#2ecc71" stroke-width="6"
-          stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- Confetti shapes -->
-        <circle cx="35"  cy="28" r="5" fill="#e94560" opacity="0.7"/>
-        <circle cx="55"  cy="10" r="4" fill="#f5a623" opacity="0.8"/>
-        <circle cx="200" cy="18" r="5" fill="#3498db" opacity="0.7"/>
-        <circle cx="218" cy="48" r="4" fill="#2ecc71" opacity="0.7"/>
-        <circle cx="28"  cy="78" r="3" fill="#9b59b6" opacity="0.7"/>
-        <circle cx="208" cy="85" r="4" fill="#f5a623" opacity="0.6"/>
-        <rect x="168" y="12" width="8" height="8" rx="2" fill="#e94560" opacity="0.6" transform="rotate(30 172 16)"/>
-        <rect x="43"  y="88" width="7" height="7" rx="2" fill="#3498db" opacity="0.6" transform="rotate(-20 46 91)"/>
-      </svg>
 
       <span class="big-icon" aria-hidden="true">🎉</span>
       <h2>Decyzja podjęta!</h2>

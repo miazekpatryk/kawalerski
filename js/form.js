@@ -48,6 +48,9 @@ const TERRAIN_OPTIONS = {
    ────────────────────────────────────────────────────────── */
 let currentStep = 0;
 const TOTAL_STEPS = 5; // ekrany 1-5 (bez ekranu podziękowania)
+const REQUIRED_NICK = 'effectowny';
+
+let nickFailTimeout = null;
 
 let wyjazdDane = {
   nick:         '',
@@ -206,10 +209,18 @@ function validateCurrentStep() {
   // Ekran 1 – nick
   if (currentStep === 0) {
     const nick = document.getElementById('nick');
-    if (!nick?.value.trim()) {
+    const nickValue = nick?.value.trim() || '';
+
+    if (!nickValue) {
       showError('err-nick', 'Wpisz swój nick, byku! 🐂');
       return false;
     }
+
+    if (nickValue.toLowerCase() !== REQUIRED_NICK) {
+      showNickFailCard();
+      return false;
+    }
+
     return true;
   }
 
@@ -243,7 +254,7 @@ function validateCurrentStep() {
   // Ekran 5 – udogodnienia (wymagane minimum jedno)
   if (currentStep === 4) {
     if (getCheckboxValues('udogodnienia').length === 0) {
-      showError('err-udogodnienia', 'Wybierz przynajmniej jedno udogodnienie.');
+      showError('err-udogodnienia', 'nie ma biedy, wybierz cos');
       return false;
     }
     return true;
@@ -259,6 +270,25 @@ function showError(id, msg) {
 
 function clearErrors() {
   document.querySelectorAll('.field-error').forEach(el => el.classList.remove('visible'));
+}
+
+function showNickFailCard() {
+  const failCard = document.getElementById('effect-fail-card');
+  if (!failCard) return;
+
+  if (nickFailTimeout) {
+    clearTimeout(nickFailTimeout);
+    nickFailTimeout = null;
+  }
+
+  document.querySelectorAll('.step-card').forEach(card => card.classList.remove('active'));
+  failCard.classList.add('active');
+
+  nickFailTimeout = setTimeout(() => {
+    showStep(0);
+    document.getElementById('nick')?.focus();
+    nickFailTimeout = null;
+  }, 1700);
 }
 
 function getRadioValue(name) {
