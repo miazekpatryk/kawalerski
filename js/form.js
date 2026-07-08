@@ -240,7 +240,15 @@ function validateCurrentStep() {
     return true;
   }
 
-  // Ekran 5 – udogodnienia (checkboxy – opcjonalne, nie wymagają walidacji)
+  // Ekran 5 – udogodnienia (wymagane minimum jedno)
+  if (currentStep === 4) {
+    if (getCheckboxValues('udogodnienia').length === 0) {
+      showError('err-udogodnienia', 'Wybierz przynajmniej jedno udogodnienie.');
+      return false;
+    }
+    return true;
+  }
+
   return true;
 }
 
@@ -290,6 +298,7 @@ function collectCurrentStep() {
    Submit (triggered from Ekran 5 – "Potwierdź plan")
    ────────────────────────────────────────────────────────── */
 async function submitForm() {
+  if (!validateCurrentStep()) return;
   collectCurrentStep(); // collect step 4 (udogodnienia)
 
   console.log(wyjazdDane);
